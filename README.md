@@ -62,5 +62,3 @@
   
   You can send any additional questions to my email : virlym@gmail.com
   <br><br><br><br>
-  
-  ![created](https://img.shields.io/badge/Helped%20by-Virlym-blue)
