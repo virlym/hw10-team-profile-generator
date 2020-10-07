@@ -1,6 +1,6 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const questionBuilder = require("./lib/questionBuilder.js");
+
 const employees = [];
 let htmlDoc;
 
@@ -17,16 +19,7 @@ let htmlDoc;
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 function addEmployee(){
-    inquirer.prompt(
-        [
-            {
-                type: "list",
-                message: "What role does the employee have in the company?",
-                choices: ["Intern", "Engineer", "Manager"],
-                name: "roleAns"
-            }
-        ]
-    ).then(function (response) {
+    inquirer.prompt(questionBuilder.questionBuilder("Init")).then(function (response) {
         if (response.roleAns === "Intern") {
             addIntern();
         }
@@ -40,36 +33,7 @@ function addEmployee(){
 }
 
 function addIntern(){
-    inquirer.prompt(
-        [
-            {
-                type: "prompt",
-                message: "What is the Intern's name?",
-                name: "nameAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Intern's id?",
-                name: "idAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Intern's email?",
-                name: "emailAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Intern's school?",
-                name: "schoolAns"
-            },
-            {
-                type: "list",
-                message: "Would you like to add another employee?",
-                choices: ["Yes", "No"],
-                name: "empAns"
-            }
-        ]
-    ).then(function (response) {
+    inquirer.prompt(questionBuilder.questionBuilder("Intern")).then(function (response) {
         employees.push(new Intern(response.nameAns, response.idAns, response.emailAns, response.schoolAns));
         if(response.empAns === "Yes"){
             addEmployee();
@@ -82,36 +46,7 @@ function addIntern(){
 }
 
 function addEngineer(){
-    inquirer.prompt(
-        [
-            {
-                type: "prompt",
-                message: "What is the Engineer's name?",
-                name: "nameAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Engineer's id?",
-                name: "idAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Engineer's email?",
-                name: "emailAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Engineer's GitHub?",
-                name: "githubAns"
-            },
-            {
-                type: "list",
-                message: "Would you like to add another employee?",
-                choices: ["Yes", "No"],
-                name: "empAns"
-            }
-        ]
-    ).then(function (response) {
+    inquirer.prompt(questionBuilder.questionBuilder("Engineer")).then(function (response) {
         employees.push(new Engineer(response.nameAns, response.idAns, response.emailAns, response.githubAns));
         if(response.empAns === "Yes"){
             addEmployee();
@@ -124,36 +59,7 @@ function addEngineer(){
 }
 
 function addManager(){
-    inquirer.prompt(
-        [
-            {
-                type: "prompt",
-                message: "What is the Manager's name?",
-                name: "nameAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Manager's id?",
-                name: "idAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Manager's email?",
-                name: "emailAns"
-            },
-            {
-                type: "prompt",
-                message: "What is the Manager's office number?",
-                name: "officeAns"
-            },
-            {
-                type: "list",
-                message: "Would you like to add another employee?",
-                choices: ["Yes", "No"],
-                name: "empAns"
-            }
-        ]
-    ).then(function (response) {
+    inquirer.prompt(questionBuilder.questionBuilder("Manager")).then(function (response) {
         employees.push(new Manager(response.nameAns, response.idAns, response.emailAns, response.officeAns));
         if(response.empAns === "Yes"){
             addEmployee();
